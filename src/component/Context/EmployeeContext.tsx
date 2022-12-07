@@ -1,0 +1,30 @@
+import React, { PropsWithChildren, useState } from "react";
+import { IContract, UserContextType } from "../Type/Employee.type";
+
+export const UserContext = React.createContext<UserContextType | null>(null);
+
+export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
+    const [users, setUsers] = useState<IContract[]>([
+        {
+            id: 1,
+            name: "Rohit",
+            email: "rohit@test.com",
+            designation: "QA",
+        },
+    ]);
+
+    const saveUser = (user: IContract) => {
+        const newUser: IContract = {
+            id: Math.random(),
+            name: user.name,
+            email: user.email,
+            designation: user.designation,
+        }
+
+        setUsers([...users, newUser]);
+    }
+
+    return (
+        <UserContext.Provider value={{users, saveUser}}>{children}</UserContext.Provider>
+    )
+}
