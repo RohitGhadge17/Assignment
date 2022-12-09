@@ -43,7 +43,7 @@ const ContractEmployeeList = () => {
             <h3 className="heading">Contractual Employee</h3>
         </div>
         <div>
-            {users.map((user: IContract) => (
+            {newList.map((user: IContract) => (
                 <ContractEmployee key={user.id} user={user} onRemove={deleteUser}/>
             ))}
             </div>
