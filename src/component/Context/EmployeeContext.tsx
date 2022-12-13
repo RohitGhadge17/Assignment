@@ -13,6 +13,8 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
         },
     ]);
 
+let myUsers;
+
     const saveUser = (user: IContract) => {
         const newUser: IContract = {
             id: Math.random(),
@@ -20,8 +22,11 @@ export const UserProvider: React.FC<PropsWithChildren> = ({ children }) => {
             email: user.email,
             designation: user.designation,
         }
+myUsers = newUser;
+        localStorage.setItem('links',JSON.stringify([...users, myUsers]));
 
         setUsers([...users, newUser]);
+localStorage.setItem('links',JSON.stringify([...users, myUsers]));
     }
 
     return (

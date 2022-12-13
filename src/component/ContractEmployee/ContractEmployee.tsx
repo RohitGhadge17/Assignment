@@ -5,13 +5,13 @@ import { IContract } from "../Type/Employee.type";
 
 type Props = {
     user: IContract;
-    // onDeleteHnd:(users: IContract) => void
-    onRemove:(id: number) => void
+    onRemove: (id: number) => void;
+    onUpdate: (users: IContract) => void;
 }
 
 const ContractEmployee = (props: Props) => {
 
-    const { user, onRemove } = props;
+    const { user, onRemove, onUpdate } = props;
 
 
     return (
@@ -23,8 +23,8 @@ const ContractEmployee = (props: Props) => {
                         <p><b>Email:</b> {user.email}</p>
                         <p><b>Designation:</b> {user.designation}</p>
 
-                        <input type="button" value="Update" className="update-btn" />
-                        <input type="button" value="Delete" className="delete-btn" onClick={() => onRemove(user.id)}  />
+                        <input type="button" value="Update" className="update-btn" onClick={() => onUpdate(user)} />
+                        <input type="button" value="Delete" className="delete-btn" onClick={() => onRemove(user.id)} />
                     </div>
                 </div>
             </div>

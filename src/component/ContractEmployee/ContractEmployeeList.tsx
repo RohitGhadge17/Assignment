@@ -1,53 +1,77 @@
-import React from "react"
+import React, { useState } from "react"
 import ContractEmployee from "./ContractEmployee";
-import { IContract, UserContextType } from "../Type/Employee.type"
+import { IContract, PageEnum, UserContextType } from "../Type/Employee.type"
 import { UserContext } from "../Context/EmployeeContext"
 import Navbar from "../Navbar/Navbar";
+import UpdateContractEmployee from "./UpdateContractEmployee";
+import { useNavigate } from "react-router-dom";
 
 
 const ContractEmployeeList = () => {
-    const {users} = React.useContext(UserContext) as UserContextType;
+    var retirievedData = localStorage.getItem("links");
+    var contractemployeelist = JSON.parse(retirievedData || "");
 
-    const [userList, setUserList] = useState(users);
+    const { users } = React.useContext(UserContext) as UserContextType;
+
+    const [userList, setUserList] = useState(contractemployeelist);
     console.log(userList);
 
+    const [displayPage, setDisplayPage] = useState(PageEnum.clist);
 
-    // const deleteUser = (users: IContract) => {
-    //     const indexToDeleteData = userList.indexOf(users);
-    //     console.log(indexToDeleteData);
-        
-    //     const tempData = [...userList];
+    const [dataToUpdate, setDataToUpdate] = useState({} as IContract)
 
-    //     tempData.splice(indexToDeleteData, 1);
-    //     setUserList(tempData);
-    //     // const data = setUserList(tempData);
-    //     // console.log(data);
-        
-    // }
+    let navigate = useNavigate();
 
-    // const deleteUser = (users:IContract) => {
-    //     const newList = userList.filter((l) => l.id !== users.id);
-    //     setUserList(newList);
 
-    // }
+
 
     const deleteUser = (id: number) => {
-        const newList = userList.filter((l) => l.id !== id) 
+        const newList = userList.filter((l: any) => l.id !== id)
         setUserList(newList);
+    }
+
+    // const onUpdateEmployeeData = (users: IContract) => {
+    //     setDataToUpdate(users);
+    // }
+
+    const updateData = (users: IContract) => {
+        setDisplayPage(PageEnum.editcontract);
+        setDataToUpdate(users);
+    }
+
+    const editedData = (users: IContract) => {
+        const filteredUserData = userList.filter((x:any) => x.id === users.id)[0];
+
+        const indexOfUserRecord = userList.indexOf(filteredUserData);
+
+        const tempUser = [...userList];
+        tempUser[indexOfUserRecord] = users;
+        setUserList(tempUser);
+        contractUserPage();
+    }
+
+    const contractUserPage = () => {
+        navigate("/contractemployeepage");
     }
 
     return (
         <>
-        <Navbar />
-        <div>
-            <h3 className="heading">Contractual Employee</h3>
-        </div>
-        <div>
-            {newList.map((user: IContract) => (
-                <ContractEmployee key={user.id} user={user} onRemove={deleteUser}/>
-            ))}
-            </div>
+            {displayPage === PageEnum.clist &&
+                <>
+                    <div>
+                        <h3 className="heading">Contractual Employee</h3>
+                    </div>
+                    <div>
+                        {userList.map((user: IContract) => (
+                            <ContractEmployee key={user.id} user={user} onRemove={deleteUser} onUpdate={updateData} />
+                        ))}
+                    </div>
+                </>
+            }
+
+            {displayPage === PageEnum.editcontract && <UpdateContractEmployee users={dataToUpdate} onEditClickHnd={editedData} />}
         </>
+
     )
 }
 
