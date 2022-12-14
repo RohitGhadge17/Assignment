@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ContractEmployeeList = () => {
-    var retirievedData = localStorage.getItem("links");
+    var retirievedData = localStorage.getItem("cusers");
     var contractemployeelist = JSON.parse(retirievedData || "");
 
     const { users } = React.useContext(UserContext) as UserContextType;
@@ -20,7 +20,7 @@ const ContractEmployeeList = () => {
 
     const [dataToUpdate, setDataToUpdate] = useState({} as IContract)
 
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
 
 
 
@@ -28,6 +28,8 @@ const ContractEmployeeList = () => {
     const deleteUser = (id: number) => {
         const newList = userList.filter((l: any) => l.id !== id)
         setUserList(newList);
+        localStorage.setItem("cusers",JSON.stringify(newList))
+
     }
 
     // const onUpdateEmployeeData = (users: IContract) => {
@@ -47,12 +49,14 @@ const ContractEmployeeList = () => {
         const tempUser = [...userList];
         tempUser[indexOfUserRecord] = users;
         setUserList(tempUser);
-        contractUserPage();
+        setDisplayPage(PageEnum.clist);
+        // contractUserPage();
+        localStorage.setItem("cusers",JSON.stringify(tempUser));
     }
 
-    const contractUserPage = () => {
-        navigate("/contractemployeepage");
-    }
+    // const contractUserPage = () => {
+    //     navigate("/contractemployeepage");
+    // }
 
     return (
         <>
