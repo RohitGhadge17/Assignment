@@ -1,21 +1,49 @@
 import React from "react";
 
 import "@testing-library/jest-dom/extend-expect";
-import { getByTestId, render, screen } from "@testing-library/react";
+import { getByTestId, getByText, render, screen } from "@testing-library/react";
 import Navbar from "./Navbar";
 
+test('it displays all the links', () => {
+    const {getByTestId} = render(<Navbar />);
 
-test("navbar has correct backgroundcolor", () => {
+    const navList = getByTestId('navbar-list');
 
-    const {container,getByTestId} = render(<Navbar />);
-
-    const navbarList = getByTestId('background');
-
-    // expect(navbarList).toHaveStyle('backgroundColor: #5c5959')
-
-    expect(getByTestId("background")).toHaveStyle('background-color: red')
-
+    expect(navList.children.length).toBe(4);
+    // expect(navList.children).toBeInTheDocument();
 })
+
+// test('renders the links in the navbar', () => {
+//     render(<Navbar />);
+
+//     const homeElement = screen.getByText(/Home/);
+//     expect(homeElement).toBeInTheDocument();
+// })
+
+
+// test('Test navbar',() => {
+//    const {container} =  render(<Navbar />);
+
+//     const homeElem = getByText(container,'Home');
+
+//     expect(homeElem).toBeInTheDocument();
+
+//     // expect(homeElem).toHaveStyle(`color:red`);
+// })
+
+
+// test("navbar has correct backgroundcolor", () => {
+
+//     const {container,getByTestId} = render(<Navbar />);
+
+//     const navbarList = getByTestId('background');
+
+
+//     expect(getByTestId("background")).toHaveStyle('background-color: red')
+
+// })
+
+
 
 // test("Navbar has corrent backgroundcolor", () => {
 //    const {container} =  render(<Navbar />)
@@ -24,6 +52,8 @@ test("navbar has correct backgroundcolor", () => {
 
     // expect(container).toHaveStyle("backgroundColor:'#5c5959'")
 // })
+
+
 
 
 
