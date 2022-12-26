@@ -3,6 +3,22 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { getByTestId, getByText, render, screen } from "@testing-library/react";
 import Navbar from "./Navbar";
+import { BrowserRouter, Routes, Router } from "react-router-dom";
+
+
+test('it displays all the links', () => {
+    const {getByTestId} = render(
+        <BrowserRouter>
+            <Navbar />
+        </BrowserRouter>
+    );
+
+    const navList = getByTestId('navbar-list');
+
+    expect(navList.children.length).toBe(4);
+    // expect(navList.children).toBeInTheDocument();
+})
+
 
 test('it displays all the links', () => {
     const {getByTestId} = render(<Navbar />);
